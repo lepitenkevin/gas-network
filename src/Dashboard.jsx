@@ -38,7 +38,7 @@ function Dashboard() {
       {/* Header & Controls Section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
         <h2 className="text-3xl font-bold text-gray-900 dark:text-white transition-colors">
-          ⛽ Bogo Gas Stations
+          ⛽ List of Gas Stations
         </h2>
 
         <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
