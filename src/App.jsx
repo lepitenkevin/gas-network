@@ -81,7 +81,7 @@ function App() {
             </div>
 
             <div className="border-t border-gray-100 dark:border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400">
-              <p>© {currentYear} Kevin Victor Lepiten. All rights reserved.</p>
+              <p>© {currentYear} Kevin Lepiten. All rights reserved.</p>
               <p>Handcrafted in Cebu, Philippines 🇵🇭</p>
             </div>
           </div>
