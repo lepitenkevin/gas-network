@@ -6,9 +6,27 @@ function Contact() {
   const form = useRef();
   const [status, setStatus] = useState({ type: '', msg: '' });
   const [loading, setLoading] = useState(false);
+  const [lastSent, setLastSent] = useState(0); // To prevent rapid-fire clicking
 
   const sendEmail = (e) => {
     e.preventDefault();
+
+    // 1. HONEYPOT CHECK
+    // If the hidden field '_hp_field' has any value, it's a bot.
+    if (form.current._hp_field.value !== "") {
+      console.warn("Spam attempt detected.");
+      // We pretend it worked so the bot doesn't keep trying
+      setStatus({ type: 'success', msg: 'Message sent! We will get back to you soon.' });
+      return; 
+    }
+
+    // 2. RATE LIMITING (60-second cooldown)
+    const now = Date.now();
+    if (now - lastSent < 60000) {
+      setStatus({ type: 'error', msg: 'Please wait a minute before sending another message.' });
+      return;
+    }
+
     setLoading(true);
 
     const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
@@ -18,6 +36,7 @@ function Contact() {
     emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form.current, PUBLIC_KEY)
       .then((result) => {
           setStatus({ type: 'success', msg: 'Message sent! We will get back to you soon.' });
+          setLastSent(Date.now()); // Start the cooldown
           form.current.reset();
       }, (error) => {
           console.error("EmailJS Error:", error);
@@ -44,9 +63,8 @@ function Contact() {
             <h3 className="text-sm font-bold uppercase text-gray-400 mb-4 tracking-wider">Direct Lines</h3>
             
             <div className="space-y-6">
-              {/* Phone Link */}
               <a href="tel:09155181798" className="group flex items-center gap-4 hover:bg-blue-50 dark:hover:bg-gray-700 p-2 rounded-xl transition-all">
-                <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 flex items-center justify-center rounded-full text-blue-600 dark:text-blue-400">
+                <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 flex items-center justify-center rounded-full text-blue-600 dark:text-blue-400 text-lg">
                    📞
                 </div>
                 <div>
@@ -55,9 +73,8 @@ function Contact() {
                 </div>
               </a>
 
-              {/* Facebook Link */}
               <a href="https://facebook.com/varcharnamekevin" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 hover:bg-blue-50 dark:hover:bg-gray-700 p-2 rounded-xl transition-all">
-                <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 flex items-center justify-center rounded-full text-blue-600 dark:text-blue-400">
+                <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 flex items-center justify-center rounded-full text-blue-600 dark:text-blue-400 text-lg">
                    🔵
                 </div>
                 <div>
@@ -84,6 +101,12 @@ function Contact() {
           )}
 
           <form ref={form} onSubmit={sendEmail} className="space-y-5">
+            
+            {/* HONEYPOT FIELD: Completely hidden from humans */}
+            <div className="hidden" aria-hidden="true">
+              <input type="text" name="_hp_field" tabIndex="-1" autoComplete="off" />
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
                 <label className="block text-sm font-semibold mb-1 dark:text-gray-300">Your Name</label>
@@ -111,7 +134,7 @@ function Contact() {
             <button 
               type="submit" 
               disabled={loading}
-              className={`w-full py-4 rounded-xl font-bold text-white shadow-lg transition-all ${loading ? 'bg-gray-400' : 'bg-blue-600 hover:bg-blue-700 shadow-blue-200 dark:shadow-none'}`}
+              className={`w-full py-4 rounded-xl font-bold text-white shadow-lg transition-all ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 shadow-blue-200 dark:shadow-none'}`}
             >
               {loading ? 'Sending...' : 'Send Message'}
             </button>
