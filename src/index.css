@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+/* By default, Tailwind v4 switches to dark mode based on your system settings. 
+  Since we built a custom Dark Mode Toggle button in App.jsx, we need to add 
+  this one line so it listens for the ".dark" class we add to the HTML! 
+*/
+@custom-variant dark (&:is(.dark *));
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900 transition-colors duration-300;
+  }
+  .dark body {
+    @apply bg-gray-900 text-gray-100;
+  }
+}
