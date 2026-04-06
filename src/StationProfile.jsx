@@ -185,7 +185,7 @@ function StationProfile() {
         <div>
           <label className="block text-xs font-semibold uppercase text-gray-400 mb-1">Additional Notes (Optional)</label>
           <textarea 
-            placeholder="e.g. Prices updated just now..." 
+            placeholder="e.g. Prices updated just now...." 
             className="w-full p-2.5 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white outline-none focus:ring-2 focus:ring-blue-500" 
             rows="3" value={reviewData.comment} onChange={e => setReviewData({...reviewData, comment: e.target.value})}
           ></textarea>
