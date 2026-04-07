@@ -59,24 +59,37 @@ function StationProfile() {
     }
   };
 
-  const handleShare = () => {
-  // Format the fuel prices for the share message
-  const fuelList = fuels.map(f => `${f.gas_name}: ₱${Number(f.price).toFixed(2)}`).join('\n');
-  
-  const shareData = {
-    title: `Gas Prices at ${station.name}`,
-    text: `📍 ${station.name} (${station.location})\n\nLatest Fuel Prices:\n${fuelList}\n\nCheck more updates here:`,
-    url: window.location.href,
-  };
+const handleShare = () => {
+    // 1. Get the current date for the share message
+    const today = new Date().toLocaleDateString('en-PH', { 
+        month: 'short', 
+        day: 'numeric', 
+        year: 'numeric' 
+    });
 
-  // Check if browser supports Web Share API (Mobile/Safari)
-  if (navigator.share) {
-    navigator.share(shareData).catch((err) => console.log('Error sharing', err));
-  } else {
-    // Fallback: Copy to clipboard or open FB
-    const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
-    window.open(fbUrl, '_blank');
-  }
+    // 2. Format the fuel prices into a clean list
+    const fuelList = fuels.length > 0 
+        ? fuels.map(f => `🔹 ${f.gas_name}: ₱${Number(f.price).toFixed(2)}`).join('\n')
+        : "Updating latest prices...";
+
+    // 3. Create the text for the post
+    const shareText = `⛽ Gas Price Update: ${station.name}\n📍 ${station.location}\n📅 As of ${today}\n\n${fuelList}\n\nCheck more stations here:`;
+
+    // 4. Use Web Share API (Best for Mobile)
+    if (navigator.share) {
+        navigator.share({
+        title: `Gas Prices at ${station.name}`,
+        text: shareText,
+        url: window.location.href,
+        }).catch(err => console.log('Share failed', err));
+    } else {
+        // 5. Desktop Fallback: Copy to Clipboard (Because FB Sharer ignores 'text' parameter)
+        navigator.clipboard.writeText(`${shareText}\n${window.location.href}`);
+        alert("Price update copied to clipboard! You can now paste it on Facebook.");
+        
+        // Optional: Still open the FB Sharer
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
+    }
 };
 
 
