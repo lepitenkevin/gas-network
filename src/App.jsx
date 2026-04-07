@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Dashboard from './Dashboard';
 import StationProfile from './StationProfile';
 import Contact from './pages/Contact'; 
+import { Analytics } from "@vercel/analytics/react"
 
 function App() {
   const [isDark, setIsDark] = useState(() => {
@@ -24,6 +25,7 @@ function App() {
   return (
     <Router>
       {/* flex flex-col min-h-screen ensures footer stays at the bottom */}
+      <Analytics />
       <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 transition-colors">
         
         {/* --- Global Navigation Bar --- */}
