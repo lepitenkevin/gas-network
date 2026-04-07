@@ -59,6 +59,27 @@ function StationProfile() {
     }
   };
 
+  const handleShare = () => {
+  // Format the fuel prices for the share message
+  const fuelList = fuels.map(f => `${f.gas_name}: ₱${Number(f.price).toFixed(2)}`).join('\n');
+  
+  const shareData = {
+    title: `Gas Prices at ${station.name}`,
+    text: `📍 ${station.name} (${station.location})\n\nLatest Fuel Prices:\n${fuelList}\n\nCheck more updates here:`,
+    url: window.location.href,
+  };
+
+  // Check if browser supports Web Share API (Mobile/Safari)
+  if (navigator.share) {
+    navigator.share(shareData).catch((err) => console.log('Error sharing', err));
+  } else {
+    // Fallback: Copy to clipboard or open FB
+    const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
+    window.open(fbUrl, '_blank');
+  }
+};
+
+
   if (!profileData) return <div className="text-center mt-10 text-lg">Loading station details...</div>;
 
   const { station, fuels, reviews } = profileData; // Assuming backend now returns approved reviews
@@ -68,18 +89,26 @@ function StationProfile() {
 
   return (
     <div className="pb-20">
-      <div className="mb-6">
-        <Link to="/" className="inline-block px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
-          &larr; Back to Stations
-        </Link>
-      </div>
+    <div className="mb-6 flex justify-between items-center">
+      <Link to="/" className="inline-block px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+        &larr; Back to Stations
+      </Link>
 
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-blue-600 dark:text-blue-400 flex items-center gap-2">
-          📍 {station.name}
-        </h1>
-        <h4 className="text-xl text-gray-500 dark:text-gray-400 mt-1">{station.location}</h4>
-      </div>
+      {/* NEW SHARE BUTTON */}
+      <button 
+        onClick={handleShare}
+        className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-bold transition shadow-md active:scale-95"
+      >
+        <span>📤</span> Share Prices
+      </button>
+    </div>
+
+    <div className="mb-8">
+      <h1 className="text-3xl font-bold text-blue-600 dark:text-blue-400 flex items-center gap-2">
+        📍 {station.name}
+      </h1>
+      <h4 className="text-xl text-gray-500 dark:text-gray-400 mt-1">{station.location}</h4>
+    </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
         {/* LEFT COLUMN: Map View */}
