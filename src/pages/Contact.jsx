@@ -73,6 +73,15 @@ function Contact() {
                   <p className="font-bold dark:text-white group-hover:text-blue-600 transition">@varcharnamekevin</p>
                 </div>
               </a>
+
+              {/* NEW: Discord Link */}
+            <a href="https://discord.gg/VYH8F4RE" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 p-2 rounded-xl transition-all">
+            <div className="w-10 h-10 bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center rounded-full text-indigo-600 dark:text-indigo-400 text-lg">💬</div>
+            <div>
+                <p className="text-xs text-gray-500 font-medium">Community Chat</p>
+                <p className="font-bold dark:text-white group-hover:text-indigo-600 transition text-sm">Join our Discord</p>
+            </div>
+            </a>
             </div>
           </div>
 

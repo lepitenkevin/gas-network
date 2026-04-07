@@ -57,37 +57,46 @@ function App() {
         </main>
 
         {/* --- Footer Section --- */}
-        <footer className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-10">
-          <div className="max-w-7xl mx-auto px-6 py-10">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-              
-              <div className="text-center md:text-left">
-                <h2 className="text-lg font-bold text-gray-800 dark:text-white">Fuel Gas Station Network</h2>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                  Crowdsourced gas prices for the PH community.
-                </p>
-              </div>
-
-              <div className="flex gap-8 text-sm font-medium text-gray-600 dark:text-gray-400">
-                <Link to="/" className="hover:text-blue-600 transition">Dashboard</Link>
-                <Link to="/contact" className="hover:text-blue-600 transition">Support</Link>
-                <a 
-                  href="https://facebook.com/varcharnamekevin" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="hover:text-blue-600 transition"
-                >
-                  Developer
-                </a>
-              </div>
+       <footer className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-10">
+        <div className="max-w-7xl mx-auto px-6 py-10">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            
+            <div className="text-center md:text-left">
+              <h2 className="text-lg font-bold text-gray-800 dark:text-white">Fuel Gas Station Network</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                Crowdsourced gas prices for the PH community.
+              </p>
             </div>
 
-            <div className="border-t border-gray-100 dark:border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400">
-              <p>© {currentYear} Kevin Lepiten. All rights reserved.</p>
-              <p>Handcrafted in Cebu, Philippines 🇵🇭</p>
+            <div className="flex flex-wrap justify-center gap-8 text-sm font-medium text-gray-600 dark:text-gray-400">
+              <Link to="/" className="hover:text-blue-600 transition">Dashboard</Link>
+              <Link to="/contact" className="hover:text-blue-600 transition">Support</Link>
+              {/* NEW: Discord Link in Footer */}
+              <a 
+                href="https://discord.gg/VYH8F4RE" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="hover:text-indigo-500 transition"
+              >
+                Discord
+              </a>
+              <a 
+                href="https://facebook.com/varcharnamekevin" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="hover:text-blue-600 transition"
+              >
+                Developer
+              </a>
             </div>
           </div>
-        </footer>
+
+          <div className="border-t border-gray-100 dark:border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400">
+            <p>© {currentYear} Kevin Lepiten. All rights reserved.</p>
+            <p>Handcrafted in Cebu, Philippines 🇵🇭</p>
+          </div>
+        </div>
+      </footer>
 
       </div>
     </Router>
