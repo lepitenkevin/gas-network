@@ -112,7 +112,7 @@ const handleShare = () => {
         onClick={handleShare}
         className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-bold transition shadow-md active:scale-95"
       >
-        <span>📤</span> Share Prices
+        <span>📤</span> Share Station
       </button>
     </div>
 
