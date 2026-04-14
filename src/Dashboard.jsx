@@ -83,17 +83,30 @@ function Dashboard() {
                 </p>
 
                 <div className="space-y-3">
-                  {branch.fuels.length === 0 ? (
-                    <p className="text-sm text-gray-400 italic">Updating fuel prices...</p>
-                  ) : (
-                    branch.fuels.map((fuel, index) => (
-                      <div key={index} className="flex justify-between items-center bg-gray-50 dark:bg-gray-900/50 p-2 rounded-lg">
-                        <span className="text-sm font-medium dark:text-gray-300">{fuel.name}</span>
-                        <span className="text-sm font-bold text-green-600 dark:text-green-400">₱{Number(fuel.price).toFixed(2)}</span>
-                      </div>
-                    ))
-                  )}
-                </div>
+                {branch.fuels.length === 0 ? (
+                  <p className="text-sm text-gray-400 italic">Updating fuel prices...</p>
+                ) : (
+                  branch.fuels.map((fuel, index) => (
+                    <div 
+                      key={index} 
+                      className="flex justify-between items-center bg-gray-50 dark:bg-gray-900/50 p-2 rounded-lg"
+                    >
+                      {/* Dynamic Badge styling based on the color_code from DB */}
+                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider text-white shadow-sm transition-colors ${
+                        fuel.color === 'red' ? 'bg-red-600 dark:bg-red-700' : 
+                        fuel.color === 'gray' ? 'bg-gray-600 dark:bg-gray-700' : 
+                        'bg-green-600 dark:bg-green-700'
+                      }`}>
+                        {fuel.name}
+                      </span>
+                      
+                      <span className="text-sm font-bold text-green-600 dark:text-green-400">
+                        ₱{Number(fuel.price).toFixed(2)}
+                      </span>
+                    </div>
+                  ))
+                )}
+              </div>
               </div>
 
               <div className="p-4 mt-auto">

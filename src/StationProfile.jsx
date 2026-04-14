@@ -83,11 +83,10 @@ const handleShare = () => {
         url: window.location.href,
         }).catch(err => console.log('Share failed', err));
     } else {
-        // 5. Desktop Fallback: Copy to Clipboard (Because FB Sharer ignores 'text' parameter)
+        // 5. Desktop Fallback: Copy to Clipboard
         navigator.clipboard.writeText(`${shareText}\n${window.location.href}`);
         alert("Price update copied to clipboard! You can now paste it on Facebook.");
         
-        // Optional: Still open the FB Sharer
         window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
     }
 };
@@ -95,7 +94,7 @@ const handleShare = () => {
 
   if (!profileData) return <div className="text-center mt-10 text-lg">Loading station details...</div>;
 
-  const { station, fuels, reviews } = profileData; // Assuming backend now returns approved reviews
+  const { station, fuels, reviews } = profileData; 
   const lat = station.latitude ? parseFloat(station.latitude) : 11.0500;
   const lng = station.longitude ? parseFloat(station.longitude) : 124.0000;
   const position = [lat, lng];
@@ -107,7 +106,6 @@ const handleShare = () => {
         &larr; Back to Stations
       </Link>
 
-      {/* NEW SHARE BUTTON */}
       <button 
         onClick={handleShare}
         className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-bold transition shadow-md active:scale-95"
@@ -161,8 +159,24 @@ const handleShare = () => {
                 ) : (
                   fuels.map(f => (
                     <tr key={f.fuel_id} className="hover:bg-gray-50 dark:hover:bg-gray-750">
-                      <td className="px-6 py-4 font-bold text-gray-900 dark:text-white">{f.gas_name}</td>
-                      <td className="px-6 py-4 font-bold text-green-600 dark:text-green-400 text-lg">₱{Number(f.price).toFixed(2)}</td>
+                      
+                      {/* --- UPDATED: Gas Name and Badge Column --- */}
+                      <td className="px-6 py-4">
+                        <div className="font-bold text-gray-900 dark:text-white text-base">
+                          {f.gas_name}
+                        </div>
+                        {f.category && (
+                          <span className={`inline-block mt-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider text-white shadow-sm ${
+                            f.color === 'red' ? 'bg-red-600 dark:bg-red-700' : 
+                            f.color === 'gray' ? 'bg-gray-500 dark:bg-gray-600' : 
+                            'bg-green-600 dark:bg-green-700'
+                          }`}>
+                            {f.category}
+                          </span>
+                        )}
+                      </td>
+                      
+                      <td className="px-6 py-4 font-bold text-green-600 dark:text-green-400 text-xl">₱{Number(f.price).toFixed(2)}</td>
                       <td className="px-6 py-4 text-gray-500 text-sm">{new Date(f.updated_at).toLocaleDateString()}</td>
                     </tr>
                   ))
@@ -173,7 +187,6 @@ const handleShare = () => {
         </div>
       </div>
 
-      {/* --- REVIEW SECTION --- */}
       {/* --- CROWDSOURCED PRICE UPDATES SECTION --- */}
 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
   
@@ -196,7 +209,6 @@ const handleShare = () => {
       )}
 
       <form onSubmit={handleSubmitReview} className="space-y-4">
-        {/* Name Field */}
         <div>
           <label className="block text-xs font-semibold uppercase text-gray-400 mb-1">Contributor Name</label>
           <input 
@@ -206,7 +218,6 @@ const handleShare = () => {
           />
         </div>
 
-        {/* Mandatory Photo Upload with Preview Style */}
         <div className="p-4 border-2 border-dashed border-gray-200 dark:border-gray-600 rounded-lg text-center bg-gray-50 dark:bg-gray-900">
           <label className="cursor-pointer block">
             <span className="text-3xl block mb-2">📷</span>
@@ -217,13 +228,12 @@ const handleShare = () => {
               type="file" accept="image/*" 
               className="hidden"
               onChange={e => setReviewData({...reviewData, photo: e.target.files[0]})} 
-              required // Make photo mandatory for price validation
+              required 
             />
             {reviewData.photo && <p className="text-xs text-gray-400 mt-1">{reviewData.photo.name}</p>}
           </label>
         </div>
 
-        {/* Comment / Note */}
         <div>
           <label className="block text-xs font-semibold uppercase text-gray-400 mb-1">Additional Notes (Optional)</label>
           <textarea 
@@ -233,8 +243,7 @@ const handleShare = () => {
           ></textarea>
         </div>
 
-        {/* Rating as 'Confidence' or 'Accuracy' */}
-        <div className="hidden"> {/* We can hide this or use it as a 5-star 'Reliability' rating */}
+        <div className="hidden">
             <input type="hidden" value="5" />
         </div>
 
@@ -256,7 +265,6 @@ const handleShare = () => {
       {reviews && reviews.length > 0 ? (
         reviews.map((rev) => (
           <div key={rev.id} className="bg-white dark:bg-gray-800 p-1 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
-            {/* The Photo is now the Hero of the card */}
             {rev.photo_path && (
               <div className="relative group">
                 <img 
