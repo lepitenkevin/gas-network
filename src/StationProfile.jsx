@@ -293,7 +293,7 @@ const handleShare = () => {
         ))
       ) : (
         <div className="text-center py-20 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-2xl">
-          <p className="text-gray-400">No community photos yet. Be the hero of Bogo City and upload one!</p>
+          <p className="text-gray-400">No community photos yet. Be the hero of Bogo City and upload one!!</p>
         </div>
       )}
     </div>
