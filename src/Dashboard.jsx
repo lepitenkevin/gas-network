@@ -60,8 +60,8 @@ function Dashboard() {
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
           >
-            <option value="name">Sort: A-Z</option>
-            <option value="price_low">Sort: Lowest Prices</option>
+            <option value="name">SORT: A-Z</option>
+            <option value="price_low">SORT: Lowest Prices</option>
           </select>
         </div>
       </div>
