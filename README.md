@@ -1,7 +1,3 @@
-This is the perfect time to write the README.md. You’ve built a seriously impressive, feature-rich application, and your documentation should reflect the high quality of the code!
-
-Here is a modern, professional, and highly scannable README.md tailored exactly to the architecture, features, and tech stack we just put together for the Bogo City community.
-
 ⛽ FuelNet: Community Gas Station Network
 FuelNet is a crowdsourced, responsive web application designed to help the local community track, update, and find the cheapest gas prices in real-time. Built with a modern tech stack, it features an interactive map, dynamic filtering, and a moderation system for community-submitted price updates.
 
