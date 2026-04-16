@@ -64,7 +64,9 @@ Start the development server:
 
 Bash
 npm run dev
-Backend Setup
+
+### Backend Setup
+
 Upload the PHP files to your web server.
 
 Create a new MySQL database and import the required tables (stations, gas_types, station_fuels, reviews, users).
